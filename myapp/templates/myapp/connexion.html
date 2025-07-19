@@ -1,0 +1,212 @@
+
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <h2 class="login-title">Connexion</h2>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post" class="login-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                {% for field in form %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <small class="form-help">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            
+
+            <button type="submit" class="login-button">Se connecter</button>
+        </form>
+
+        <div class="signup-link">
+            <p>Pas encore de compte ? <a href="{% url 'inscription' %}">S'inscrire</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Style général */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        background-color: #f5f7fa;
+        padding: 20px;
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 500px;
+        transition: transform 0.3s ease;
+    }
+
+    .login-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .login-title {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    /* Formulaire */
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .form-field label {
+        font-weight: 500;
+        color: #34495e;
+        font-size: 14px;
+    }
+
+    .form-field input {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .form-field input:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .form-help {
+        color: #7f8c8d;
+        font-size: 12px;
+    }
+
+    .form-error {
+        color: #e74c3c;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    /* Options du formulaire */
+    .form-options {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: -10px;
+    }
+
+    .forgot-password {
+        color: #3498db;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .forgot-password:hover {
+        text-decoration: underline;
+    }
+
+    /* Bouton */
+    .login-button {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .login-button:hover {
+        background-color: #27ae60;
+    }
+
+    /* Lien d'inscription */
+    .signup-link {
+        text-align: center;
+        margin-top: 25px;
+        color: #7f8c8d;
+        font-size: 14px;
+    }
+
+    .signup-link a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .signup-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Messages */
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .messages li {
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .messages .error {
+        background-color: #fdecea;
+        color: #d32f2f;
+        border: 1px solid #ef9a9a;
+    }
+
+    .messages .success {
+        background-color: #e8f5e9;
+        color: #388e3c;
+        border: 1px solid #a5d6a7;
+    }
+
+    .messages .info {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        border: 1px solid #90caf9;
+    }
+</style>
+{% endblock %}

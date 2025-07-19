@@ -1,0 +1,192 @@
+
+
+{% block content %}
+<div class="signup-container">
+    <div class="signup-card">
+        <h2 class="signup-title">Inscription</h2>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post" class="signup-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                {% for field in form %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <small class="form-help">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="signup-button">S'inscrire</button>
+        </form>
+
+        <p class="login-link">Déjà un compte ? <a href="{% url 'connexion' %}">Se connecter</a></p>
+    </div>
+</div>
+
+<style>
+    /* Style général */
+    .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        background-color: #f5f7fa;
+        padding: 20px;
+    }
+
+    .signup-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 500px;
+        transition: transform 0.3s ease;
+    }
+
+    .signup-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .signup-title {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    /* Formulaire */
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .form-field label {
+        font-weight: 500;
+        color: #34495e;
+        font-size: 14px;
+    }
+
+    .form-field input {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border 0.3s ease;
+    }
+
+    .form-field input:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .form-help {
+        color: #7f8c8d;
+        font-size: 12px;
+    }
+
+    .form-error {
+        color: #e74c3c;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    /* Bouton */
+    .signup-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .signup-button:hover {
+        background-color: #2980b9;
+    }
+
+    /* Lien de connexion */
+    .login-link {
+        text-align: center;
+        margin-top: 20px;
+        color: #7f8c8d;
+        font-size: 14px;
+    }
+
+    .login-link a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Messages */
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .messages li {
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .messages .error {
+        background-color: #fdecea;
+        color: #d32f2f;
+        border: 1px solid #ef9a9a;
+    }
+
+    .messages .success {
+        background-color: #e8f5e9;
+        color: #388e3c;
+        border: 1px solid #a5d6a7;
+    }
+
+    .messages .info {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        border: 1px solid #90caf9;
+    }
+</style>
+{% endblock %}
